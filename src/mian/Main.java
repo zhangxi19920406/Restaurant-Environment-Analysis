@@ -11,7 +11,9 @@ import com.beust.jcommander.Parameter;
 import api.yelp.YelpAPI;
 
 public class Main {
-	
+
+	private static final String ARGUMENT_YELP_API = "yelp";
+
 	private static final String DEFAULT_TERM = "dinner";
 	private static final String DEFAULT_LOCATION = "New York, NY";
 
@@ -24,14 +26,6 @@ public class Main {
 	private static final String TOKEN = "o2a1G3tmobRNl9lKLizEhEQA6D03tckg";
 	private static final String TOKEN_SECRET = "4AFzgUZB_bAvrBLBQn-JHjaWQhU";
 
-	public static void main(String[] args) {
-		YelpAPICLI yelpApiCli = new YelpAPICLI();
-		new JCommander(yelpApiCli, args);
-
-		YelpAPI yelpApi = new YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
-		queryAPI(yelpApi, yelpApiCli);
-	}
-	
 	/**
 	 * Command-line interface for the sample Yelp API runner.
 	 */
@@ -42,15 +36,36 @@ public class Main {
 		@Parameter(names = { "-l", "--location" }, description = "Location to be Queried")
 		public String location = DEFAULT_LOCATION;
 	}
-	
+
+	public static void main(String[] args) {
+		if (yelpAPIArgument(args)) {
+			YelpAPICLI yelpApiCli = new YelpAPICLI();
+			new JCommander(yelpApiCli, args);
+
+			YelpAPI yelpApi = new YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
+			queryAPI(yelpApi, yelpApiCli);
+		}
+	}
+
+	/**
+	 * Check the whether the system argument is to use the yelp API.
+	 * 
+	 * @param args
+	 *            the system argument
+	 * @return whether the system argument is to get yelp API
+	 */
+	private static boolean yelpAPIArgument(String[] args) {
+		return (args.length == 1 && args[0].equalsIgnoreCase(ARGUMENT_YELP_API));
+	}
+
 	/**
 	 * Queries the Search API based on the command line arguments and takes the
 	 * first result to query the Business API.
 	 * 
 	 * @param yelpApi
-	 *            <tt>YelpAPI</tt> service instance
+	 *            service instance
 	 * @param yelpApiCli
-	 *            <tt>YelpAPICLI</tt> command line arguments
+	 *            command line arguments
 	 */
 	private static void queryAPI(YelpAPI yelpApi, YelpAPICLI yelpApiCli) {
 		String searchResponseJSON = yelpApi.searchForBusinessesByLocation(yelpApiCli.term, yelpApiCli.location);
