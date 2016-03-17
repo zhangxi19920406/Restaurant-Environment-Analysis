@@ -32,7 +32,7 @@ public class YelpAPI {
 	private static final String API_HOST = "api.yelp.com";
 	// private static final String DEFAULT_TERM = "dinner";
 	// private static final String DEFAULT_LOCATION = "San Francisco, CA";
-	private static final int SEARCH_LIMIT = 3;
+	private static final int SEARCH_LIMIT = 20;
 	private static final String SEARCH_PATH = "/v2/search";
 	private static final String BUSINESS_PATH = "/v2/business";
 	//
@@ -81,9 +81,10 @@ public class YelpAPI {
 	 */
 	public String searchForBusinessesByLocation(String term, String location) {
 		OAuthRequest request = createOAuthRequest(SEARCH_PATH);
+		request.addQuerystringParameter("offset", String.valueOf(300));
 		request.addQuerystringParameter("term", term);
 		request.addQuerystringParameter("location", location);
-		request.addQuerystringParameter("limit", String.valueOf(SEARCH_LIMIT));
+		//request.addQuerystringParameter("limit", String.valueOf(SEARCH_LIMIT));
 		return sendRequestAndGetResponse(request);
 	}
 
@@ -129,72 +130,23 @@ public class YelpAPI {
 		Response response = request.send();
 		return response.getBody();
 	}
-	//
-	// /**
-	// * Queries the Search API based on the command line arguments and takes
-	// the
-	// * first result to query the Business API.
-	// *
-	// * @param yelpApi
-	// * <tt>YelpAPI</tt> service instance
-	// * @param yelpApiCli
-	// * <tt>YelpAPICLI</tt> command line arguments
-	// */
-	// private static void queryAPI(YelpAPI yelpApi, YelpAPICLI yelpApiCli) {
-	// String searchResponseJSON =
-	// yelpApi.searchForBusinessesByLocation(yelpApiCli.term,
-	// yelpApiCli.location);
-	//
-	// JSONParser parser = new JSONParser();
-	// JSONObject response = null;
-	// try {
-	// response = (JSONObject) parser.parse(searchResponseJSON);
-	// } catch (ParseException pe) {
-	// System.out.println("Error: could not parse JSON response:");
-	// System.out.println(searchResponseJSON);
-	// System.exit(1);
-	// }
-	//
-	// JSONArray businesses = (JSONArray) response.get("businesses");
-	// JSONObject firstBusiness = (JSONObject) businesses.get(0);
-	// String firstBusinessID = firstBusiness.get("id").toString();
-	// System.out.println(String.format("%s businesses found, querying business
-	// info for the top result \"%s\" ...",
-	// businesses.size(), firstBusinessID));
-	//
-	// // Select the first business and display business details
-	// String businessResponseJSON =
-	// yelpApi.searchByBusinessId(firstBusinessID.toString());
-	// System.out.println(String.format("Result for business \"%s\" found:",
-	// firstBusinessID));
-	// System.out.println(businessResponseJSON);
-	// }
-	//
-	// /**
-	// * Command-line interface for the sample Yelp API runner.
-	// */
-	// private static class YelpAPICLI {
-	// @Parameter(names = { "-q", "--term" }, description = "Search Query Term")
-	// public String term = DEFAULT_TERM;
-	//
-	// @Parameter(names = { "-l", "--location" }, description = "Location to be
-	// Queried")
-	// public String location = DEFAULT_LOCATION;
-	// }
-	//
-	// /**
-	// * Main entry for sample Yelp API requests.
-	// * <p>
-	// * After entering your OAuth credentials, execute <tt><b>run.sh</b></tt>
-	// to
-	// * run this example.
-	// */
-	// public static void main(String[] args) {
-	// YelpAPICLI yelpApiCli = new YelpAPICLI();
-	// new JCommander(yelpApiCli, args);
-	//
-	// YelpAPI yelpApi = new YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN,
-	// TOKEN_SECRET);
-	// queryAPI(yelpApi, yelpApiCli);
-	// }
+
+	// TODO
+	
+	public String search(String term, String location) {
+		OAuthRequest request = createOAuthRequest(SEARCH_PATH);
+		request.addQuerystringParameter("offset", "Chinese");
+		request.addQuerystringParameter("term", term);
+		//request.addQuerystringParameter("category_filter", "Chinese");
+		request.addQuerystringParameter("location", location);
+		return sendRequestAndGetResponse(request);
+	}
+	
+	public String searchForBusinessesByLocation(int offset, String term, String location) {
+		OAuthRequest request = createOAuthRequest(SEARCH_PATH);
+		request.addQuerystringParameter("offset", String.valueOf(offset));
+		request.addQuerystringParameter("term", term);
+		request.addQuerystringParameter("location", location);
+		return sendRequestAndGetResponse(request);
+	}
 }
