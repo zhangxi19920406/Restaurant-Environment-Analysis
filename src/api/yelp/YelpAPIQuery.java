@@ -100,6 +100,9 @@ public class YelpAPIQuery {
 				JSONObject business = (JSONObject) businesses.get(i);
 				writeJSONToFile(filepath, business.toJSONString() + "\r\n");
 			}
+			if (offset >= 1000) {
+				break;
+			}
 
 		}
 		System.out.println(yelpApiCli.term + ", " + yelpApiCli.category_filter + ", " + yelpApiCli.location + ": "
