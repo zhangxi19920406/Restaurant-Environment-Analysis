@@ -117,10 +117,8 @@ public class YelpAPI {
 	 * @return <tt>String</tt> body of API response
 	 */
 	private String sendRequestAndGetResponse(OAuthRequest request) {
-		//System.out.println("Querying " + request.getCompleteUrl() + " ...");
 		this.service.signRequest(this.accessToken, request);
 		Response response = request.send();
-		//System.out.print(1);
 		return response.getBody();
 	}
 

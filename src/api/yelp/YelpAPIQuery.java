@@ -58,6 +58,7 @@ public class YelpAPIQuery {
 				queryAPI(yelpApi, yelpApiCli, filepath);
 			}
 		}
+		System.out.println("Finished!");
 	}
 
 	/**
@@ -93,15 +94,22 @@ public class YelpAPIQuery {
 			}
 			total = new Integer(response.get("total").toString());
 			offset += 20;
-
+			
+			if (!response.containsKey("businesses")) {
+				System.out.println(response.toJSONString());
+				break;
+			}
 			JSONArray businesses = (JSONArray) response.get("businesses");
 			
 			for (int i = 0; i < businesses.size(); i++) {
 				JSONObject business = (JSONObject) businesses.get(i);
-				writeJSONToFile(filepath, business.toJSONString() + "\r\n");
+				writeJSONToFile(filepath + "/" +yelpApiCli.location + ".json", business.toJSONString() + "\r\n");
 			}
 			if (offset >= 1000) {
 				break;
+			}
+			if (offset % 100 == 0) {
+				System.out.println(offset);
 			}
 
 		}
