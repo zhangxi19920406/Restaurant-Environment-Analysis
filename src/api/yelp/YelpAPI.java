@@ -1,18 +1,11 @@
 package api.yelp;
 
-//import org.json.simple.JSONArray;
-//import org.json.simple.JSONObject;
-//import org.json.simple.parser.JSONParser;
-//import org.json.simple.parser.ParseException;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
 import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
-
-//import com.beust.jcommander.JCommander;
-//import com.beust.jcommander.Parameter;
 
 /**
  * Code sample for accessing the Yelp API V2.
@@ -30,23 +23,13 @@ import org.scribe.oauth.OAuthService;
 public class YelpAPI {
 
 	private static final String API_HOST = "api.yelp.com";
-	// private static final String DEFAULT_TERM = "dinner";
-	// private static final String DEFAULT_LOCATION = "San Francisco, CA";
+	
 	private static final int SEARCH_LIMIT = 20;
 	private static final String SEARCH_PATH = "/v2/search";
 	private static final String BUSINESS_PATH = "/v2/business";
-	//
-	// /*
-	// * Update OAuth credentials below from the Yelp Developers API site:
-	// * http://www.yelp.com/developers/getting_started/api_access
-	// */
-	// private static final String CONSUMER_KEY = "";
-	// private static final String CONSUMER_SECRET = "";
-	// private static final String TOKEN = "";
-	// private static final String TOKEN_SECRET = "";
 
-	OAuthService service;
-	Token accessToken;
+	private final OAuthService service;
+	private final Token accessToken;
 
 	/**
 	 * Setup the Yelp API OAuth credentials.
@@ -84,7 +67,16 @@ public class YelpAPI {
 		request.addQuerystringParameter("offset", String.valueOf(300));
 		request.addQuerystringParameter("term", term);
 		request.addQuerystringParameter("location", location);
-		//request.addQuerystringParameter("limit", String.valueOf(SEARCH_LIMIT));
+		request.addQuerystringParameter("limit", String.valueOf(SEARCH_LIMIT));
+		return sendRequestAndGetResponse(request);
+	}
+	
+	public String searchForBusinessesByLocation(int offset, String term, String category_filter, String location) {
+		OAuthRequest request = createOAuthRequest(SEARCH_PATH);
+		request.addQuerystringParameter("offset", String.valueOf(offset));
+		request.addQuerystringParameter("term", term);
+		request.addQuerystringParameter("category_filter", category_filter);
+		request.addQuerystringParameter("location", location);
 		return sendRequestAndGetResponse(request);
 	}
 
@@ -125,28 +117,11 @@ public class YelpAPI {
 	 * @return <tt>String</tt> body of API response
 	 */
 	private String sendRequestAndGetResponse(OAuthRequest request) {
-		System.out.println("Querying " + request.getCompleteUrl() + " ...");
+		//System.out.println("Querying " + request.getCompleteUrl() + " ...");
 		this.service.signRequest(this.accessToken, request);
 		Response response = request.send();
+		//System.out.print(1);
 		return response.getBody();
 	}
 
-	// TODO
-	
-	public String search(String term, String location) {
-		OAuthRequest request = createOAuthRequest(SEARCH_PATH);
-		request.addQuerystringParameter("offset", "Chinese");
-		request.addQuerystringParameter("term", term);
-		//request.addQuerystringParameter("category_filter", "Chinese");
-		request.addQuerystringParameter("location", location);
-		return sendRequestAndGetResponse(request);
-	}
-	
-	public String searchForBusinessesByLocation(int offset, String term, String location) {
-		OAuthRequest request = createOAuthRequest(SEARCH_PATH);
-		request.addQuerystringParameter("offset", String.valueOf(offset));
-		request.addQuerystringParameter("term", term);
-		request.addQuerystringParameter("location", location);
-		return sendRequestAndGetResponse(request);
-	}
 }
