@@ -1,5 +1,7 @@
 package api.yelp;
 
+import java.util.concurrent.TimeUnit;
+
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
@@ -23,7 +25,7 @@ import org.scribe.oauth.OAuthService;
 public class YelpAPI {
 
 	private static final String API_HOST = "api.yelp.com";
-	
+
 	private static final int SEARCH_LIMIT = 20;
 	private static final String SEARCH_PATH = "/v2/search";
 	private static final String BUSINESS_PATH = "/v2/business";
@@ -70,7 +72,7 @@ public class YelpAPI {
 		request.addQuerystringParameter("limit", String.valueOf(SEARCH_LIMIT));
 		return sendRequestAndGetResponse(request);
 	}
-	
+
 	public String searchForBusinessesByLocation(int offset, String term, String category_filter, String location) {
 		OAuthRequest request = createOAuthRequest(SEARCH_PATH);
 		request.addQuerystringParameter("offset", String.valueOf(offset));
@@ -106,6 +108,7 @@ public class YelpAPI {
 	 */
 	private OAuthRequest createOAuthRequest(String path) {
 		OAuthRequest request = new OAuthRequest(Verb.GET, "https://" + API_HOST + path);
+		request.setConnectTimeout(1, TimeUnit.SECONDS);
 		return request;
 	}
 
@@ -118,8 +121,13 @@ public class YelpAPI {
 	 */
 	private String sendRequestAndGetResponse(OAuthRequest request) {
 		this.service.signRequest(this.accessToken, request);
-		Response response = request.send();
-		return response.getBody();
+		try {
+			Response response = request.send();
+			return response.getBody();
+		} catch (Exception e) {
+			System.out.println("TimeOut");
+			return sendRequestAndGetResponse(request);
+		}
 	}
 
 }
