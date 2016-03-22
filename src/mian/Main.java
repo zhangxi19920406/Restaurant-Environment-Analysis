@@ -7,7 +7,7 @@ public class Main {
 	private static final String ARGUMENT_YELP_API = "yelp";
 
 	public static void main(String[] args) {
-		// Argument for get yelp data : yelp
+		// Argument for get yelp data : yelp [file path]
 		if (yelpAPIArgument(args)) {
 			YelpAPIQuery yelpAPIQuery = new YelpAPIQuery();
 			System.out.println("Filepath:" + args[1]);
