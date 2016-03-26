@@ -21,7 +21,9 @@ public class YelpAPIQuery {
 			"10013", "10014", "10004", "10005", "10006", "10007", "10038", "10280", "10002", "10003", "10009", "10021",
 			"10028", "10044", "10065", "10075", "10128", "10023", "10024", "10025", "10031", "10032", "10033", "10034",
 			"10040" };
-	private static final String[] DEFAULT_CATEGORY_FILTER = { "japanese", "chinese", "taiwanese", "korean", "italian" };
+	private static final String[] DEFAULT_CATEGORY_FILTER = { "chinese", "italian", "newamerican", "mexican",
+			"tradamerican", "japanese", "latin", "seafood", "indpak", "thai", "french", "turkish", "african",
+			"greek" };
 
 	/*
 	 * Update OAuth credentials below from the Yelp Developers API site:
@@ -103,7 +105,8 @@ public class YelpAPIQuery {
 
 			for (int i = 0; i < businesses.size(); i++) {
 				JSONObject business = (JSONObject) businesses.get(i);
-				//writeJSONToFile(filepath + "/" + yelpApiCli.location + ".json", business.toJSONString() + "\r\n");
+				// writeJSONToFile(filepath + "/" + yelpApiCli.location +
+				// ".json", business.toJSONString() + "\r\n");
 				writeJSONToFile(filepath + "/YELPAPI.json", business.toJSONString() + "\r\n");
 			}
 			if (offset >= 1000) {
