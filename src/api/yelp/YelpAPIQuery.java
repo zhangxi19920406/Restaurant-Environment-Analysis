@@ -22,8 +22,7 @@ public class YelpAPIQuery {
 			"10028", "10044", "10065", "10075", "10128", "10023", "10024", "10025", "10031", "10032", "10033", "10034",
 			"10040" };
 	private static final String[] DEFAULT_CATEGORY_FILTER = { "chinese", "italian", "newamerican", "mexican",
-			"tradamerican", "japanese", "latin", "seafood", "indpak", "thai", "french", "turkish", "african",
-			"greek" };
+			"tradamerican", "japanese", "latin", "indpak", "thai", "french", "turkish", "african", "greek" };
 
 	/*
 	 * Update OAuth credentials below from the Yelp Developers API site:
