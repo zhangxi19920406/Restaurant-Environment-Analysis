@@ -9,7 +9,7 @@ set mapred.queue.names=queue3;
 
 add jar MyHiveUDF.jar;
 
-create temporary function myToTime as 'com.JobPaymentUDF.myToTime';
+create temporary function myToTime as 'com.JobPaymentUDF.MyToTime';
 create temporary function PriceToNum as 'com.JobPaymentUDF.PriceToNum';
 
 drop table if exists Job_zip;
