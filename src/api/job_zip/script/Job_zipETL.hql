@@ -7,6 +7,11 @@ LOAD DATA LOCAL INPATH '../data/DOB_Job_Application_Filings.csv' OVERWRITE INTO 
 USE income;
 set mapred.queue.names=queue3;
 
+add jar MyHiveUDF.jar;
+
+create temporary function myToTime as 'com.JobPaymentUDF.myToTime';
+create temporary function PriceToNum as 'com.JobPaymentUDF.PriceToNum';
+
 drop table if exists Job_zip;
 create table Job_zip
 ( 
@@ -21,7 +26,7 @@ zip string
 
 INSERT OVERWRITE LOCAL DIRECTORY '../data/Job_zip'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' 
-select Job, Paid, InitialCost, TotalEstFee, Owner_BusinessName, StreetName, Zip
+select Job, MyToTime(Paid), PriceToNum(InitialCost), PriceToNum(TotalEstFee), Owner_BusinessName, StreetName, Zip
 from DOB_Job_Application_Filings
 where Borough = "MANHATTAN" AND Paid is not NULL AND Paid <> '' AND Zip is not NULL and Zip <> ''
 order by Zip;
