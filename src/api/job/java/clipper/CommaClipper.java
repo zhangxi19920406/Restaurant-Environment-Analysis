@@ -1,6 +1,4 @@
-package clipper;
-
-import java.io.*;
+package api.job.java.clipper;
 
 public class CommaClipper {
 	private static String source;
@@ -18,7 +16,7 @@ public class CommaClipper {
 			return false;
 	}
 	
-	public static String trimComma(){
+	public String trimComma(){
 		if (IsNullOrEmpty(source))
         {
             return source;
