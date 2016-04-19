@@ -2,4 +2,7 @@
 
 The Analysis of the Restaurant Business Status and Surrounding Environment in Manhattan
 
-The data of the restaurant business status is coming from Yelp. And the surrounding environment might include the traffic, which mainly metro (data from MTA), and the economic conditions in each area divided by zipcode. The economic conditions is now showing as the average salary of the past 4 years’ employees (data from NYC open dataset).
+In the paper, it is aimed to seek the the restaurants’ business status with their surrounding environment. The dataset area of the research is limited in Manhattan, New York. And the surrounding environment are considered as the traffic and economic conditions, which chosen as metro data and average salary of company positions. All the restaurants’ business data status is come form Yelp, besides that the metro data and salary data are collected from MTA and New York City Open Data. Map Reduce and Hive are used to process and mine all the datasets. 
+
+Keywords
+Analytics, Yelp, Rating, Surrounding Environment
