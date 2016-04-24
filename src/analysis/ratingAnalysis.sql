@@ -9,6 +9,18 @@ GROUP BY manhattanyelp.zipcode, categories.category) AS b
 ON a.zipcode = b.zipcode AND a.category = b.category
 ORDER BY a.zipcode, a.category;
 
+DROP TABLE highRatingZipCode;
+
+CREATE TABLE highRatingZipCode AS
+SELECT a.*, b.count FROM
+(SELECT zipcodes.zipcode AS zipcode, categories.category AS category FROM categories FULL JOIN zipcodes) AS a LEFT JOIN
+(SELECT manhattanyelp.zipcode as zipcode, categories.category AS category, count(manhattanyelp.id) AS count
+FROM manhattanyelp LEFT JOIN categories ON categories.category = manhattanyelp.category
+WHERE manhattanyelp.rating > 4.0
+GROUP BY manhattanyelp.zipcode, categories.category) AS b
+ON a.zipcode = b.zipcode AND a.category = b.category
+ORDER BY a.zipcode, a.category;
+
 DROP TABLE ratingNeighborhood;
 
 CREATE TABLE ratingNeighborhood AS
@@ -19,3 +31,16 @@ FROM manhattanyelp LEFT JOIN categories ON categories.category = manhattanyelp.c
 GROUP BY manhattanyelp.neighborhood, categories.category) AS b
 ON a.neighborhood = b.neighborhood AND a.category = b.category
 ORDER BY a.neighborhood, a.category;
+
+DROP TABLE highRatingNeighborhood;
+
+CREATE TABLE highRatingNeighborhood AS
+SELECT a.*, b.count FROM
+(SELECT DISTINCT zipcodes.neighborhood AS neighborhood, categories.category AS category FROM categories FULL JOIN zipcodes) AS a LEFT JOIN
+(SELECT manhattanyelp.neighborhood as neighborhood, categories.category AS category, count(manhattanyelp.id) AS count
+FROM manhattanyelp LEFT JOIN categories ON categories.category = manhattanyelp.category
+WHERE manhattanyelp.rating > 4.0
+GROUP BY manhattanyelp.neighborhood, categories.category) AS b
+ON a.neighborhood = b.neighborhood AND a.category = b.category
+ORDER BY a.neighborhood, a.category;
+
