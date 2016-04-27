@@ -33,5 +33,5 @@ into table Block_Zip;
 insert overwrite local directory "../data/join"
 row format delimited fields terminated by ','
 select Job, d.block, d.lot, fill_time, Est_income, Est_cost, zipcode
-from Job_zip d left join Block_Zip p on (d.block = p.block AND d.lot = p.lot)
+from Job_zip d left join Area_Percent a on (d.block = a.block AND d.lot = a.lot)
 order by zipcode;
