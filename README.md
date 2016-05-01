@@ -7,10 +7,11 @@ In the paper, it is aimed to seek the the restaurants’ business status with th
 Keywords
 Analytics, Yelp, Rating, Surrounding Environment
 
-Data:
-The Yelp API runner and reformat runner are built in the main runner of the JAVA project.
+1. Data ETL and API in /api/ directory:
+  (a)MTA: filter out unnessary data and locate in Manhhatan area for analysis.
+  (b)The Yelp API runner and reformat runner are built in the main runner of the JAVA project.
 
-Analysis:
-The InputTables.sql is run in Hive for input the table for analysis.
-
-The RatingAnalysis.sql is run to get the rating analysis result.
+2. Analysis in /analysis/ directory:
+  (a) 9 files by order: task1.pig ~ task9.pig, run through pig with HDFS to locate the good candidates around each entrances.
+  (b) The InputTables.sql is run in Hive for input the table for analysis.
+  (c) The RatingAnalysis.sql is run to get the rating analysis result.
