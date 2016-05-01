@@ -8,7 +8,7 @@ Keywords
 Analytics, Yelp, Rating, Surrounding Environment
 
 1. Data ETL and API in /api/ directory: <br />
-  (a)MTA: filter out unnessary data and locate in Manhhatan area for analysis. <br />
+  (a)MTA: filter out unnessary attributes and locate in Manhhatan area for analysis. <br />
   (b)The Yelp API runner and reformat runner are built in the main runner of the JAVA project. <br />
 
 2. Analysis in /analysis/ directory: <br />
