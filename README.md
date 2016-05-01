@@ -12,6 +12,6 @@ Analytics, Yelp, Rating, Surrounding Environment
   (b)The Yelp API runner and reformat runner are built in the main runner of the JAVA project. <br />
 
 2. Analysis in /analysis/ directory: <br />
-  (a) 9 files by order: task1.pig ~ task9.pig, run through pig with HDFS to locate the good candidates around each entrances. <br />
+  (a) task1.pig ~ task9.pig by order, run through pig with HDFS to locate the good candidates around each entrances. <br />
   (b) The InputTables.sql is run in Hive for input the table for analysis. <br />
   (c) The RatingAnalysis.sql is run to get the rating analysis result. <br />
