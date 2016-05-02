@@ -8,9 +8,9 @@ Keywords
 Analytics, Yelp, Rating, Surrounding Environment
 
 1. Data ETL and API in /api/ directory: <br />
-  (a)MTA: zipcode.pig & zipcode_clean.pig for filtering out unnessary attributes and locating in Manhhatan area. <br />
-  (b)The Yelp API runner and reformat runner are built in the main runner of the JAVA project. <br />
-  (c)job: "java" file contains a java program for removing unexpected noise in the raw datasets. "script" file contains 4 hive scripts for loading and profiling data from two datasets. "udf" file contains 2 hive user defined function to adjust input type while loading data. <br />
+  (a) MTA: zipcode.pig & zipcode_clean.pig for filtering out unnessary attributes and locating in Manhhatan area. <br />
+  (b) The Yelp API runner and reformat runner are built in the main runner of the JAVA project. <br />
+  (c) job: "java" file contains a java program for removing unexpected noise in the raw datasets. "script" file contains 4 hive scripts for loading and profiling data from two datasets. "udf" file contains 2 hive user defined function to adjust input type while loading data. <br />
 
 2. Analysis in /analysis/ directory: <br />
   (a) task1.pig ~ task9.pig by order, run through pig with HDFS to locate the good candidates around each entrances. <br />
